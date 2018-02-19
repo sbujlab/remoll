@@ -6,6 +6,7 @@
 #include "G4MaterialTable.hh"
 #include "G4GenericMessenger.hh"
 
+/* FIXME - Block to be included for text-file based tracking
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -19,6 +20,7 @@ ofstream myfile6;
 ofstream myfile7;
 ofstream myfile8;
 ofstream myfile9;
+*/
 
 remollSteppingAction::remollSteppingAction()
 : fDrawFlag(false),fEnableKryptonite(true)
@@ -69,6 +71,7 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep)
 
       fTrack->SetTrackStatus(fStopAndKill); // kill the current track
       // fTrack->SetTrackStatus(fKillTrackAndSecondaries); // kill the current track and also associated secondaries
+/* FIXME - Block to be included for text-file based tracking
     myfile1.open ("parent_position_output.txt", ios::app);
     myfile2.open ("1st_daughter_position_output.txt", ios::app);
     myfile3.open ("2nd_daughter_position_output.txt", ios::app);
@@ -79,7 +82,6 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep)
     myfile8.open ("7th_daughter_position_output.txt", ios::app);
     myfile9.open ("8th_daughter_position_output.txt", ios::app);
   
-
 
     if (fTrack->GetTrackID() == 1) {
     	G4ThreeVector pos = fTrack->GetPosition();
@@ -155,7 +157,6 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep)
 	double zPos = pos.getZ();
 	myfile9 << xPos << "\t" << yPos << "\t" << zPos << " \n"; 
   }
-
    myfile1.close();
    myfile2.close();
    myfile3.close();
@@ -165,5 +166,6 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep)
    myfile7.close();
    myfile8.close();
    myfile9.close();
+*/
 }
 }

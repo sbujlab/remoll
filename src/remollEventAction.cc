@@ -13,6 +13,7 @@
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 
+/* FIXME - Block to be included for text-file based tracking
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -26,6 +27,7 @@ ofstream Secondmyfile6;
 ofstream Secondmyfile7;
 ofstream Secondmyfile8;
 ofstream Secondmyfile9;
+*/
 
 namespace { G4Mutex remollEventActionMutex = G4MUTEX_INITIALIZER; }
 
@@ -36,6 +38,7 @@ remollEventAction::~remollEventAction() { }
 
 void remollEventAction::BeginOfEventAction(const G4Event* event) {
 
+/* FIXME - Block to be included for text-file based tracking
     Secondmyfile1.open ("parent_position_output.txt", ios::app);
     Secondmyfile1 << event->GetEventID()+1 << " \n";
     Secondmyfile1.close();
@@ -63,7 +66,7 @@ void remollEventAction::BeginOfEventAction(const G4Event* event) {
     Secondmyfile9.open ("8th_daughter_position_output.txt", ios::app);
     Secondmyfile9 << event->GetEventID()+1 << " \n";
     Secondmyfile9.close();
- 
+*/ 
  }
 
 void remollEventAction::EndOfEventAction(const G4Event* aEvent)
@@ -84,10 +87,12 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   const remollEvent* event = fPrimaryGeneratorAction->GetEvent();
   io->SetEventData(event);
 
+/* FIXME - Block to be included for text-file based tracking
   int goodParticle = 0;	
   int collimatorHit = 0;
   int generation = 0;
   double finalEnergy, finalMomentum;
+*/
   // Traverse all hit collections, sort by output type
   G4HCofThisEvent *HCE = aEvent->GetHCofThisEvent();
   for (int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++) {
@@ -121,6 +126,8 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   // Fill tree and reset buffers
   io->FillTree();
   io->Flush();
+/* FIXME - Block to be included for text-file based tracking
+
 	Secondmyfile1.open ("parent_position_output.txt", ios::app);
 	// if (goodParticle == 1 && collimatorHit == 1) {  // Use collimatorHit==1 if we want to ensure that Moller scattered particles going through the acceptance defining collimator are the only things getting through.
 	if (goodParticle == 1 && generation == 1 ) {  
@@ -210,5 +217,5 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 
 
   return;
-
+*/
 }

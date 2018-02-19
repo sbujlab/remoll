@@ -9,8 +9,8 @@
 # This must be explicitly called
 /run/initialize
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/remoll/addfield moller_field_maps/blockyHybrid_rm_3.0.txt
+/remoll/addfield moller_field_maps/blockyUpstream_rm_1.1.txt
 
 #/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
 #/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A

@@ -33,6 +33,8 @@ class remollEventAction : public G4UserEventAction
   private:
     // Random seed at begin of event
     G4String fEventSeed;
+	
+    
 };
 
 #endif

@@ -14,26 +14,28 @@ class remollGenBeam : public remollVEventGen {
     public:
 	remollGenBeam();
 	virtual ~remollGenBeam();
-    void SetOriginX(double x);
-    void SetOriginY(double y);
-    void SetOriginZ(double z);
+    void SetHitX(double x);
+    void SetHitY(double y);
+    void SetHitZ(double z);
 
-    void SetMomentumX(double px);
-    void SetMomentumY(double py);
-    void SetMomentumZ(double pz);
+    void SetTheta(double theta);
+    void SetDeltaPhi(double dphi);
+
+    void SetZOffset(double zOff);
 
     void SetPartName(G4String& name);
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
-	double fXpos;
-	double fYpos;
-	double fZpos;
+	double fXhitPos;
+	double fYhitPos;
+	double fZhitPos;
 
-    double fXmomentum;
-    double fYmomentum;
-    double fZmomentum;
+    double fTheta;
+    double fDeltaPhi;
+
+    double fZoffset;
 
     G4String fParticleName;
 };

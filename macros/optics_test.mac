@@ -51,11 +51,9 @@
 
 # Electrons incident on quartz------------
 
-/remoll/evgen/beam/x -987.5
+/remoll/evgen/beam/hitx -987.5
 /remoll/beamene 855 MeV
-/remoll/evgen/beam/px -0.04361938736
-#/remoll/evgen/beam/py 0
-/remoll/evgen/beam/pz 0.9904822158
+/remoll/evgen/beam/theta -2.5
 
 /remoll/evgen/beam/partName e-
 

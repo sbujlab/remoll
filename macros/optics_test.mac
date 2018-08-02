@@ -1,7 +1,7 @@
 # Recreating the Mainz beam test
 
 # These must be called before initialize
-/remoll/setgeofile geometry/mollerMother_black.gdml
+/remoll/setgeofile geometry_blackening/mollerMother_Mainz.gdml
 /remoll/physlist/optical/enable
 
 # This must be explicitly called
@@ -26,15 +26,15 @@
 
 #Setup for shooting photons on the cathode
 
-/remoll/evgen/beam/z -200
-/remoll/evgen/beam/x -1300 
-/remoll/evgen/beam/px -1
-/remoll/evgen/beam/py 0
-/remoll/evgen/beam/pz 0
+#/remoll/evgen/beam/z -200
+#/remoll/evgen/beam/x -1300 
+#/remoll/evgen/beam/px -1
+#/remoll/evgen/beam/py 0
+#/remoll/evgen/beam/pz 0
 
-/remoll/evgen/beam/partName opticalphoton 
+#/remoll/evgen/beam/partName opticalphoton 
 
-/remoll/beamene 5 eV
+#/remoll/beamene 5 eV
 
 
 #-----------------------------------------
@@ -45,15 +45,18 @@
 
 /process/list
 
-/remoll/filename remollout_photons.root
+#/remoll/filename remollout_photons.root
 
-/run/beamOn 100
+#/run/beamOn 100
 
 # Electrons incident on quartz------------
 
-/remoll/evgen/beam/hitx -987.5
-/remoll/beamene 855 MeV
-/remoll/evgen/beam/theta -2.5
+/remoll/evgen/beam/hitz 0 mm
+/remoll/evgen/beam/hity 0 mm
+/remoll/evgen/beam/hitx -987.5 mm
+#/remoll/evgen/beam/theta -2.5 deg
+
+/remoll/evgen/beam/zOffset 500 mm
 
 /remoll/evgen/beam/partName e-
 

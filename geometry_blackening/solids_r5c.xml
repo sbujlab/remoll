@@ -1,0 +1,130 @@
+<solids>
+
+<box lunit="mm" name="boxMotherSol_r5c" x="2000" y="4000" z="4000"/>
+<cone aunit="rad" deltaphi="2*PI" lunit="mm" name="coneMotherSol_r5c" rmax1="499" rmax2="499" rmin1="0" rmin2="0" startphi="0" z="2000"/>
+<subtraction name ="logicMotherSol_r5c">
+	<first ref="boxMotherSol_r5c"/> 
+	<second ref="coneMotherSol_r5c"/> 
+	<position unit="mm" name="coneMotherPos_r5c" x="0" y="0" z="0"/>
+        <rotation unit="rad" name="coneMotherRot_r5c" x="0" y="PI/2" z="0"/>
+</subtraction>
+
+<box name="quartzRecSol_52002" x="10" y="82.2798075940184" z="140" lunit= "mm" />
+<xtru name = "quartzCutSol_52002" lunit= "mm" >
+ <twoDimVertex x="4.99999836602578" y="5" />
+ <twoDimVertex x="4.99999836602578" y="-5" />
+ <twoDimVertex x="-4.99999836602578" y="-5" />
+ <section zOrder="1" zPosition="-41.1399037970092" xOffset="0" yOffset="0" scalingFactor="1" />
+ <section zOrder="2" zPosition="41.1399037970092" xOffset="0" yOffset="0" scalingFactor="1" />
+</xtru>
+<union name="quartzSol_52002">
+    <first ref="quartzRecSol_52002"/>
+    <second ref="quartzCutSol_52002"/>
+    <position name="quartzCutSolPos_52002" unit="mm" x="0" y="0" z="74.9999983660258"/>
+    <rotation name="quartzCutSolRot_52002" unit="rad" x="PI/2" y="0" z="PI"/> 
+</union>
+<trd name = "lgLogicSol_52002" z="150" y1="88.2966595056641" x1="93.5347980815345" y2="99.5468519116457" x2="99.5347980815345" lunit= "mm"/>
+<xtru name = "refLogicSol_52002" lunit= "mm" >
+ <twoDimVertex x="24.9895290834801" y="40.194608171953" />
+ <twoDimVertex x="-69.1297478274356" y="35.2620258813263" />
+ <twoDimVertex x="-8.00411703799376" y="-40" />
+ <twoDimVertex x="8.6737516495137" y="-40" />
+ <section zOrder="1" zPosition="-44.1399037970092" xOffset="0" yOffset="0" scalingFactor="1" />
+ <section zOrder="2" zPosition="44.1399037970092" xOffset="0" yOffset="0" scalingFactor="1"/>
+</xtru>
+<box name="pmtLogicSol_52002" x="93.53" y="93.53" z="152.4" lunit= "mm" />
+<union name="quartzLogicSol1_52002">
+    <first ref="quartzRecSol_52002"/>
+    <second ref="refLogicSol_52002"/>
+    <position name="refLogicSolPos_52002" unit="mm" x="0" y="0" z="110"/>
+    <rotation name="refLogicSolRot_52002" unit="rad" x="PI/2" y="0" z="0"/> 
+</union>
+<union name="quartzLogicSol2_52002">
+    <first ref="quartzLogicSol1_52002"/>
+    <second ref="lgLogicSol_52002"/>
+   <position name="lgLogicSolPos_52002" unit="mm" x="-26.3540343528588" y="0" z="222.606731981621"/>
+    <rotation name="lgLogicSolRot_52002" unit="rad" x="0" y="-0.0523598775598299" z="0"/> 
+</union>
+<union name="quartzLogicSol_52002">
+    <first ref="quartzLogicSol2_52002"/>
+    <second ref="pmtLogicSol_52002"/>
+   <position name="pmtLogicSolPos_52002" unit="mm" x="-34.2672309367919" y="0" z="373.599517636512"/>
+    <rotation name="pmtLogicSolRot_52002" unit="rad" x="0" y="-0.0523598775598299" z="0"/> 
+</union>
+<trd name = "lgSol_52002" z="150" y1="82.2798075940184" x1="87.53" y2="93.53" x2="93.53" lunit= "mm"/>
+<subtraction name ="lgSolSkin_52002">
+	<first ref="lgLogicSol_52002"/> 
+	<second ref="lgSol_52002"/> 
+	<position unit="mm" name="lgSolPos_52002" x="0" y="0" z="0"/>
+        <rotation unit="rad" name="lgSolRot_52002" x="0" y="0" z="0"/>
+</subtraction>
+
+<xtru name = "refSol_52002" lunit= "mm" >
+ <twoDimVertex x="21.276183953896" y="40" />
+ <twoDimVertex x="-66.1338592231719" y="35.4190337500551" />
+ <twoDimVertex x="-5" y="-40" />
+ <twoDimVertex x="5" y="-40" />
+ <section zOrder="1" zPosition="-41.1399037970092" xOffset="0" yOffset="0" scalingFactor="1" />
+ <section zOrder="2" zPosition="41.1399037970092" xOffset="0" yOffset="0" scalingFactor="1"/>
+</xtru>
+<subtraction name ="refSolSkin_52002">
+	<first ref="refLogicSol_52002"/> 
+	<second ref="refSol_52002"/> 
+	<position unit="mm" name="refSolPos_52002" x="0" y="0" z="0"/>
+        <rotation unit="rad" name="refSolRot_52002" x="0" y="0" z="0"/>
+</subtraction>
+
+<subtraction name ="refSol1_52002">
+	<first ref="refSol_52002"/> 
+	<second ref="quartzCutSol_52002"/> 
+	<position unit="mm" name="quartzCutPos_52002" x="0" y="80*(-0.5)+10*(0.5*tan(abs(0.785398)))" z="0"/>
+        <rotation unit="rad" name="quartzCutRot_52002" x="0" y="PI" z="0"/>
+</subtraction>
+
+<xtru name = "reflectorSol_52002" lunit= "mm" >
+ <twoDimVertex x="21.8950748088267" y="40.0324346953255" />
+ <twoDimVertex x="21.276183953896" y="40" />
+ <twoDimVertex x="5" y="-40" />
+ <twoDimVertex x="5.61229194158562" y="-40" />
+ <section zOrder="1" zPosition="-41.1399037970092" xOffset="0" yOffset="0" scalingFactor="1" />
+ <section zOrder="2" zPosition="41.1399037970092" xOffset="0" yOffset="0" scalingFactor="1"/>
+</xtru>
+<subtraction name ="refSolSkin1_52002">
+	<first ref="refSolSkin_52002"/> 
+	<second ref="reflectorSol_52002"/> 
+	<position name="reflectorSolPos_52002" unit="mm" x="0" y="0" z="0"/>
+	<rotation name="reflectorSolRot_52002" unit="rad" x="0" y="0" z="0"/>
+</subtraction>
+
+<cone name = "pmtFullSol_52002" rmin1="0" rmax1="38.1" rmin2="0" rmax2="38.1" z="152.4"
+startphi="0" deltaphi="2*PI" aunit="rad" lunit= "mm" />
+<subtraction name ="pmtSkinSol_52002">
+	<first ref="pmtLogicSol_52002"/> 
+	<second ref="pmtFullSol_52002"/> 
+	<position unit="mm" name="pmtSolPos_52002" x="0" y="0" z="0"/>
+        <rotation unit="rad" name="pmtSolRot_52002" x="0" y="0" z="0"/>
+</subtraction>
+
+<cone name = "pmtCathodeSol_52002" rmin1="0" rmax1="38.1" rmin2="0" rmax2="38.1" z="1.524"
+startphi="0" deltaphi="2*PI" aunit="rad" lunit= "mm" />
+<subtraction name ="pmtSol_52002">
+	<first ref="pmtFullSol_52002"/> 
+	<second ref="pmtCathodeSol_52002"/> 
+	<position unit="mm" name="pmtCathodeSolPos_52002" x="0" y="0" z="-18.8595"/>
+        <rotation unit="rad" name="pmtCathodeSolRot_52002" x="0" y="0" z="0"/>
+</subtraction>
+
+<opticalsurface name="Quartz" model="glisur" finish="ground" type="dielectric_dielectric" value=".97">
+			<property name="RINDEX" ref="Quartz_Surf_RINDEX"/>
+			<property name="SPECULARLOBECONSTANT" ref="Quartz_Surf_SPECLOBE"/>
+			<property name="SPECULARSPIKECONSTANT" ref="Quartz_Surf_SPECSPIKE"/> 
+			<property name="BACKSCATTERCONSTANT" ref="Quartz_Surf_BACKSCATTER"/> 
+		</opticalsurface><opticalsurface name="Aluminium" model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+			<property name="REFLECTIVITY" ref="Aluminium_Surf_Reflectivity"/>
+</opticalsurface><opticalsurface name="Mylar" model="glisur" finish="polishlumirrorair" type="dielectric_metal" value="1.0">
+			<property name="REFLECTIVITY" ref="Mylar_Surf_Reflectivity"/>
+</opticalsurface><opticalsurface name="Cathode" model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+			<property name="REFLECTIVITY" ref="Cathode_Surf_Reflectivity"/>
+			<property name="EFFICIENCY" ref="Cathode_Surf_Efficiency"/>
+</opticalsurface>
+</solids>

@@ -27,12 +27,12 @@ remollGenBeam::remollGenBeam()
 {
     fApplyMultScatt = true;
     
-    fThisGenMessenger->DeclareMethod("hitx",&remollGenBeam::SetHitX,"x coordinate of hit position for the beam");
-    fThisGenMessenger->DeclareMethod("hity",&remollGenBeam::SetHitY,"y coordinate of hit position for the beam");
-    fThisGenMessenger->DeclareMethod("hitz",&remollGenBeam::SetHitZ,"z coordinate of hit position for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("hitx","mm",&remollGenBeam::SetHitX,"x coordinate of hit position for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("hity","mm",&remollGenBeam::SetHitY,"y coordinate of hit position for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("hitz","mm",&remollGenBeam::SetHitZ,"z coordinate of hit position for the beam");
     
-    fThisGenMessenger->DeclareMethod("theta",&remollGenBeam::SetTheta,"angle of beam with respect to z-axis");
-    fThisGenMessenger->DeclareMethod("zOffset", &remollGenBeam::SetZOffset,"distance from particle origin to hit in z-direction");
+    fThisGenMessenger->DeclareMethodWithUnit("theta","deg",&remollGenBeam::SetTheta,"angle of beam with respect to z-axis");
+    fThisGenMessenger->DeclareMethodWithUnit("zOffset","mm", &remollGenBeam::SetZOffset,"distance from particle origin to hit in z-direction");
     
     fThisGenMessenger->DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
 }

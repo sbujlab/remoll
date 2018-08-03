@@ -1,0 +1,49 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 600x600-0+0  
+
+#/vis/open OGLIQt 1200x800
+
+#/remoll/setgeofile geometry_sculpt_wshield/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt_less_targshld/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother_noShld.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother_krypto_cols.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother_krypto_Coils.gdml
+
+# This is the current working geometry
+#/remoll/setgeofile geometry_tests/mollerMother_combined_local.gdml
+#/remoll/setgeofile geometry_single/mollerMother_single.gdml
+/remoll/setgeofile geometry_blackening/mollerMother_Mainz.gdml
+
+#/remoll/likekryptonite  true
+
+#Below the this energy, the tracks are killed
+#/remoll/minEnergyCut 0 MeV
+
+#/remoll/setphysicslist QGSP_BERT_EMV
+
+/remoll/physlist/optical/enable 
+
+/run/initialize
+#/remoll/addfield CLEO_rm.dat
+/control/execute vis/vis.mac
+#/gun/position 0.0 0.0 -0.1 m
+#/gun/momentum 0.5 1.0 2.0 GeV
+
+# Raster is on by default with 5x5mm
+/remoll/rasx 0 mm
+/remoll/rasy 0 mm
+
+/remoll/evgen/set beam 
+/run/beamOn 0
+#/remoll/evgen/blackening/minPhi 170 deg
+#/remoll/evgen/blackening/maxPhi 190 deg
+/remoll/evgen/beam/hitz 0 mm
+/remoll/evgen/beam/hity 0 mm
+/remoll/evgen/beam/hitx -987.5 mm
+#/remoll/evgen/beam/theta -2.5 deg
+
+/remoll/evgen/beam/zOffset 500 mm
+
+/remoll/beamene 855 MeV
+#/run/beamOn 100

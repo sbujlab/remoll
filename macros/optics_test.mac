@@ -62,4 +62,4 @@
 
 /remoll/filename remollout_quartz.root
 
-/run/beamOn 1
+/run/beamOn 100

@@ -11,6 +11,9 @@
 #include "G4GenericMessenger.hh"
 #include "G4ParticleTable.hh"
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "remolltypes.hh"
 
 #include <math.h>
@@ -32,12 +35,9 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("zOffset", &remollGenBeam::SetZOffset,"distance from particle origin to hit in z-direction");
     
     fThisGenMessenger->DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
-    
-    //fZpos = -5.0*m;
 }
 
 remollGenBeam::~remollGenBeam() { }
-
 
 void remollGenBeam::SetHitX(double x){ fXhitPos = x; }
 void remollGenBeam::SetHitY(double y){ fYhitPos = y; }
@@ -47,6 +47,10 @@ void remollGenBeam::SetZOffset(double zOff){ fZoffset = zOff; }
 
 void remollGenBeam::SetTheta(double theta){ fTheta = theta; }
 void remollGenBeam::SetDeltaPhi(double dphi){ fDeltaPhi = dphi; }
+
+void remollGenBeam::SetPolarizationX(double sx){ fXPolarization = sx; }
+void remollGenBeam::SetPolarizationY(double sy){ fYPolarization = sy; }
+void remollGenBeam::SetPolarizationZ(double sz){ fZPolarization = sz; }
 
 void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
@@ -88,7 +92,8 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
 	    evt->fBeamMomentum, 
-	    fParticleName);
+	    fParticleName,
+            evt->fBeamPolarization);
 
     evt->SetEffCrossSection(0.0);
     evt->SetAsymmetry(0.0);

@@ -31,13 +31,13 @@
          <materialref ref="Air"/>
          <solidref ref="refSol1_50002"/> 
          <auxiliary auxtype="Color" auxvalue="green"/> 
- 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
-	 <auxiliary auxtype="DetNo" auxvalue="50102"/>  
 </volume>
 <volume name="refVolSkin_50002">
          <materialref ref="Aluminium"/>
          <solidref ref="refSolSkin1_50002"/> 
          <auxiliary auxtype="Color" auxvalue="brown"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+	 <auxiliary auxtype="DetNo" auxvalue="50102"/>  
 </volume>
 <skinsurface name="refVolSkin_50002_skin" surfaceproperty="Aluminium" >
     <volumeref ref="refVolSkin_50002"/>
@@ -54,13 +54,13 @@
          <materialref ref="Air"/>
          <solidref ref="lgSol_50002"/> 
          <auxiliary auxtype="Color" auxvalue="blue"/> 
- 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
-	 <auxiliary auxtype="DetNo" auxvalue="50202"/>  
 </volume>
 <volume name="lgVolSkin_50002">
          <materialref ref="Aluminium"/>
          <solidref ref="lgSolSkin_50002"/> 
          <auxiliary auxtype="Color" auxvalue="brown"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+	 <auxiliary auxtype="DetNo" auxvalue="50202"/>  
 </volume>
 <skinsurface name="lgVolSkin_50002_skin" surfaceproperty="Aluminium" >
     <volumeref ref="lgVolSkin_50002"/>
@@ -79,7 +79,7 @@
          <materialref ref="Photocathode"/>
          <solidref ref="pmtCathodeSol_50002"/> 
          <auxiliary auxtype="Color" auxvalue="green"/> 
- 	 <auxiliary auxtype="SensDet" auxvalue="opticalphoton"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
 	 <auxiliary auxtype="DetNo" auxvalue="50402"/>  
 </volume>
 <skinsurface name="pmtCathodeVol_50002_skin" surfaceproperty="Cathode" >
@@ -158,7 +158,7 @@
 
 </volume>
 <volume name="logicMotherVol_Mainz"> 
-	<materialref ref="Air"/>
+	<materialref ref="Vacuum"/>
 	<solidref ref="logicMotherSol_Mainz"/>
 <physvol name="detector_50002">
 			<volumeref ref="quartzVol_50002"/>

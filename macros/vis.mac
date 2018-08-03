@@ -22,7 +22,7 @@
 
 #/remoll/setphysicslist QGSP_BERT_EMV
 
-/remoll/physlist/optical/enable 
+#/remoll/physlist/optical/enable 
 
 /run/initialize
 #/remoll/addfield CLEO_rm.dat

@@ -1,13 +1,19 @@
 # Recreating the Mainz beam test
 
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother_Mainz.gdml
+/remoll/setgeofile geometry_blackening/mollerMother_Mainz.gdml
 /remoll/physlist/optical/enable
 # This must be explicitly called
 /run/initialize
 
 /remoll/evgen/set beam 
 /run/beamOn 0
+/remoll/evgen/beam/hitz 0 mm
+/remoll/evgen/beam/hity 0 mm
+/remoll/evgen/beam/hitx -987.5 mm
+#/remoll/evgen/beam/theta -2.5 deg
+
+/remoll/evgen/beam/zOffset 500 mm
 
 /remoll/beamene 855 MeV
 /remoll/evgen/beam/partName e-
@@ -27,46 +33,5 @@
 /remoll/kryptonite/set true
 
 /process/list
-
-/remoll/evgen/beam/hitx -150
-/remoll/evgen/beam/theta -10
-
-/remoll/filename remollout_10.root
-
-/run/beamOn 10000
-
-/remoll/evgen/beam/theta -6.67
-
-/remoll/filename remollout_667.root
-
-/run/beamOn 10000
-
-/remoll/evgen/beam/theta -3.33
-
-/remoll/filename remollout_333.root
-
-/run/beamOn 10000
-
-/remoll/evgen/beam/theta 0
-
-/remoll/filename remollout_0.root
-
-/run/beamOn 10000
-
-/remoll/evgen/beam/theta 3.33
-
-/remoll/filename remollout_n333.root
-
-/run/beamOn 10000
-
-/remoll/evgen/beam/theta 6.67
-
-/remoll/filename remollout_n667.root
-
-/run/beamOn 10000
-
-/remoll/evgen/beam/theta 10
-
-/remoll/filename remollout_n10.root
-
-/run/beamOn 10000
+/remoll/filename remollout_Mainz.root
+/run/beamOn 1000

@@ -48,10 +48,6 @@ void remollGenBeam::SetZOffset(double zOff){ fZoffset = zOff; }
 void remollGenBeam::SetTheta(double theta){ fTheta = theta; }
 void remollGenBeam::SetDeltaPhi(double dphi){ fDeltaPhi = dphi; }
 
-void remollGenBeam::SetPolarizationX(double sx){ fXPolarization = sx; }
-void remollGenBeam::SetPolarizationY(double sy){ fYPolarization = sy; }
-void remollGenBeam::SetPolarizationZ(double sz){ fZPolarization = sz; }
-
 void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
 void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
@@ -92,8 +88,8 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
 	    evt->fBeamMomentum, 
-	    fParticleName,
-            evt->fBeamPolarization);
+	    fParticleName);
+    
 
     evt->SetEffCrossSection(0.0);
     evt->SetAsymmetry(0.0);

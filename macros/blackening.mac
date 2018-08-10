@@ -1,5 +1,4 @@
-# store tracks
-#/tracking/storeTrajectory 1
+#Shoots backtraced MOLLER hit distribution directly at the full detector array
 
 # This must be called before initialize
 /remoll/setgeofile geometry_optimize/mollerMother_fullArray.gdml

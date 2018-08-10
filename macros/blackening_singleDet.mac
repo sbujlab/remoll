@@ -1,5 +1,4 @@
-# store tracks
-#/tracking/storeTrajectory 1
+#Shoots the backtraced moller hit distribution for the first septant at a single detector
 
 # This must be called before initialize
 /remoll/setgeofile geometry_optimize/singleDet/mollerMother_singleDet.gdml

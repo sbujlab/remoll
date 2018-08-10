@@ -19,7 +19,6 @@
 #include "remolltypes.hh"
 
 G4Mutex inFileMutexBlk = G4MUTEX_INITIALIZER;
-<<<<<<< HEAD
 #define pi 3.141592653589793238462643383279502884L
 
 remollGenBlackening::remollGenBlackening()
@@ -27,37 +26,19 @@ remollGenBlackening::remollGenBlackening()
   fMinRad(600), fMaxRad(1200),
   fMinPhi(-180.0*deg), fMaxPhi(180.0*deg),
   fSeptFold(true)
-=======
-
-remollGenBlackening::remollGenBlackening()
-: remollVEventGen("blackening"),
-  fMinRad(600), fMaxRad(1200),
-  fMinPhi(-180.0*deg), fMaxPhi(180.0*deg)
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
 {
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("minRad",&remollGenBlackening::SetMinRadius,"Minimum Radius for Blackening Study");
   fThisGenMessenger->DeclareMethod("maxRad",&remollGenBlackening::SetMaxRadius,"Maximum Radius for Blackening Study");
   fThisGenMessenger->DeclareMethod("minPhi",&remollGenBlackening::SetMinPhi,"Minimum Phi for Blackening Study");
   fThisGenMessenger->DeclareMethod("maxPhi",&remollGenBlackening::SetMaxPhi,"Maximum Phi for Blackening Study");
-<<<<<<< HEAD
   fThisGenMessenger->DeclareMethod("useFirstSeptant", &remollGenBlackening::SetSeptantFolding,"Use only the first septant data, implies that you have phi-folded root output");
   G4cout << "Constructed remollGenBlackening" << G4endl;
 
-=======
-  
-  G4cout << "Constructed remollGenBlackening" << G4endl;
-  
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
   // Get needed information from TTrees for each scattering type 
   InitializeMollerVariables();
   InitializeElasticVariables();
   InitializeInelasticVariables();
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
   fMollerEntry = G4RandFlat::shoot(fMollerEntries);
   fElasticEntry = G4RandFlat::shoot(fElasticEntries);
   fInelasticEntry = G4RandFlat::shoot(fInelasticEntries);
@@ -81,10 +62,7 @@ remollGenBlackening::~remollGenBlackening()
   }
 }
 
-<<<<<<< HEAD
 void remollGenBlackening::SetSeptantFolding(G4bool sept){fSeptFold = sept;}
-=======
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
 void remollGenBlackening::SetMinRadius(G4double min){fMinRad = min;}
 void remollGenBlackening::SetMaxRadius(G4double max){fMaxRad = max;}
 void remollGenBlackening::SetMinPhi(G4double min){fMinPhi = min;}
@@ -99,7 +77,6 @@ void remollGenBlackening::InitializeMollerVariables()
     fMollerFile->Close();
     fMollerFile = 0;
   }
-<<<<<<< HEAD
   G4String filename;
   //if the given phi range is small, use the septant folded root files
   if (fSeptFold){
@@ -108,11 +85,6 @@ void remollGenBlackening::InitializeMollerVariables()
   }else{
     filename = "remollout_moller.root";
   }
-=======
-
-  // Try to open filename
-  G4String filename = "remollout_moller.root";
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
   fMollerFile = new TFile(filename);
   if (! fMollerFile) {
     G4cerr << "Could not open external event file " << filename << G4endl;
@@ -155,27 +127,20 @@ void remollGenBlackening::InitializeElasticVariables()
 {
   G4AutoLock inFileLock(&inFileMutexBlk);
   G4cout << "Getting the external file for elastic scattering" << G4endl;
-<<<<<<< HEAD
-=======
   
   // Declare generic variables
-  G4String filename = "remollout_elastic.root";
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
 
   if (fElasticFile) {
     fElasticFile->Close();
     fElasticFile = 0;
   }
 
-<<<<<<< HEAD
   G4String filename;
   //if the given phi range is small, use the septant folded root files
   if (fSeptFold)
     filename = "remollout_elastic_sept.root";
   else
     filename = "remollout_elastic.root";
-=======
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
   // Try to open filename
   fElasticFile = new TFile(filename);
   if (! fElasticFile) {
@@ -220,27 +185,18 @@ void remollGenBlackening::InitializeInelasticVariables()
 {
   G4AutoLock inFileLock(&inFileMutexBlk);
   G4cout << "Getting the external file for inelastic scattering" << G4endl;
-<<<<<<< HEAD
-=======
-  
-  // Declare generic variables
-  G4String filename = "remollout_inelastic.root";
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
 
   if (fInelasticFile) {
     fInelasticFile->Close();
     fInelasticFile = 0;
   }
 
-<<<<<<< HEAD
   G4String filename;
   //if the given phi range is small, use the septant folded root files
   if (fSeptFold)
     filename = "remollout_inelastic_sept.root";
   else
     filename = "remollout_inelastic.root";
-=======
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
   // Try to open filename
   fInelasticFile = new TFile(filename);
   if (! fInelasticFile) {
@@ -285,7 +241,6 @@ void remollGenBlackening::SamplePhysics(remollVertex* /* vert */, remollEvent* e
 {
   //Determine which scattering type to sample from
   double rndm = G4RandFlat::shoot(0.0,1.0);
-<<<<<<< HEAD
 
   fMollerTree->GetEntry(fMollerEntry);
   fElasticTree->GetEntry(fElasticEntry);
@@ -298,20 +253,6 @@ void remollGenBlackening::SamplePhysics(remollVertex* /* vert */, remollEvent* e
     SampleElasticPhysics(evt);
   }else{
     SampleInelasticPhysics(evt);
-=======
-  
-  fMollerTree->GetEntry(fMollerEntry);
-  fElasticTree->GetEntry(fElasticEntry);
-  fInelasticTree->GetEntry(fInelasticEntry);
-  
-  double totRate = fMollerRate + fElasticRate + fInelasticRate;
-  if (rndm < fMollerRate/totRate){
-      SampleMollerPhysics(evt);
-  }else if (rndm < (fMollerRate + fElasticRate)/totRate){
-      SampleElasticPhysics(evt);
-  }else{
-      SampleInelasticPhysics(evt);
->>>>>>> 46e8242ad16d707d5a10634b2b673b8369d1de36
   }
 }
 

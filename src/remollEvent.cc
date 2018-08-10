@@ -10,10 +10,20 @@
 
 #include "G4Event.hh"
 #include "G4ParticleTable.hh"
+#include "G4GenericMessenger.hh"
 
 remollEvent::remollEvent()
-: fBeamTarget(0)
+: fMessenger(0),fBeamTarget(0),fTrackIDs(0)
 {
+  fMessenger = new G4GenericMessenger(this,"/remoll/tracking/","Remoll tracking properties");
+  fMessenger->DeclareProperty("trackIDs",fTrackIDs)
+    .SetGuidance("Select tracking flag")
+    .SetGuidance(" 0 : Track nothing")
+    .SetGuidance(" 1 : Track primaries (track ID < 2)")
+    .SetGuidance(" 2 : Track all")
+    .SetParameterName("flag",false)
+    .SetRange("flag >=0 && flag <= 2")
+    .SetStates(G4State_PreInit,G4State_Idle);
     Reset();
 }
 
@@ -65,7 +75,7 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
     
     else for(G4int i = 0; i < trajectoryContainer->entries(); i++){
 	//Only store trajectories of primary particles
-	if((*trajectoryContainer)[i]->GetTrackID() < 2){
+	if(fTrackIDs==2 || (fTrackIDs==1 && (*trajectoryContainer)[i]->GetTrackID() < 2)){
 		//Store each point in the container in the remollEventParticle_t structure
 		for(int j = 0; j<(*trajectoryContainer)[i]->GetPointEntries(); j++){
 			G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));

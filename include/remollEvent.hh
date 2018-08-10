@@ -18,6 +18,7 @@ class G4Event;
 class G4PrimaryParticle;
 class G4ParticleDefinition;
 
+class G4GenericMessenger;
 class remollBeamTarget;
 
 class remollEvent {
@@ -46,6 +47,8 @@ class remollEvent {
 
     private:
 	remollBeamTarget* fBeamTarget;
+        G4GenericMessenger* fMessenger;
+        G4int fTrackIDs;
     public:
 	const remollBeamTarget* GetBeamTarget() const { return fBeamTarget; }
 	void SetBeamTarget(remollBeamTarget* bt) { fBeamTarget = bt; }

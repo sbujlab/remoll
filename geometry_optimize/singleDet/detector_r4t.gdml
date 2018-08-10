@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+	<!ENTITY materials SYSTEM "materialsOptical.xml"> 
+	<!ENTITY solids_r4t SYSTEM "solids_r4t.xml"> 
+	<!ENTITY matrices_r4t SYSTEM "matrices_r4t.xml">
+]> 
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+
+<define>
+<constant name="PI" value="1.*pi"/>
+&matrices_r4t;
+</define>
+&materials; 
+&solids_r4t;
+
+<structure>
+<volume name="quartzRecVol_40028">
+         <materialref ref="Quartz"/>
+         <solidref ref="quartzSol_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="red"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+	 <auxiliary auxtype="DetNo" auxvalue="40028"/>  
+</volume>
+<skinsurface name="quartzRecVol_40028_skin" surfaceproperty="Quartz" >
+    <volumeref ref="quartzRecVol_40028"/>
+  </skinsurface>
+ <volume name="refVol_40028">
+         <materialref ref="Air"/>
+         <solidref ref="refSol1_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="green"/> 
+</volume>
+<volume name="refVolSkin_40028">
+         <materialref ref="Aluminium"/>
+         <solidref ref="refSolSkin1_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="brown"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+	 <auxiliary auxtype="DetNo" auxvalue="40128"/>  
+</volume>
+<skinsurface name="refVolSkin_40028_skin" surfaceproperty="Mylar" >
+    <volumeref ref="refVolSkin_40028"/>
+  </skinsurface>
+<volume name="reflectorVol_40028">
+         <materialref ref="Aluminium"/>
+         <solidref ref="reflectorSol_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="red"/> 
+</volume>
+<skinsurface name="reflectorVol_40028_skin" surfaceproperty="Mylar" >
+    <volumeref ref="reflectorVol_40028"/>
+  </skinsurface>
+ <volume name="lgVol_40028">
+         <materialref ref="Air"/>
+         <solidref ref="lgSol_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="blue"/> 
+</volume>
+<volume name="lgVolSkin_40028">
+         <materialref ref="Aluminium"/>
+         <solidref ref="lgSolSkin_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="brown"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+	 <auxiliary auxtype="DetNo" auxvalue="40228"/>  
+</volume>
+<skinsurface name="lgVolSkin_40028_skin" surfaceproperty="Mylar" >
+    <volumeref ref="lgVolSkin_40028"/>
+  </skinsurface>
+ <volume name="pmtVol_40028">
+         <materialref ref="Aluminium"/>
+         <solidref ref="pmtSol_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="red"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+	 <auxiliary auxtype="DetNo" auxvalue="40328"/>  
+</volume>
+<skinsurface name="pmtVol_40028_skin" surfaceproperty="Aluminium" >
+    <volumeref ref="pmtVol_40028"/>
+  </skinsurface>
+ <volume name="pmtCathodeVol_40028">
+         <materialref ref="Photocathode"/>
+         <solidref ref="pmtCathodeSol_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="green"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+	 <auxiliary auxtype="DetNo" auxvalue="40428"/>  
+   <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+   </volume>
+<skinsurface name="pmtCathodeVol_40028_skin" surfaceproperty="Cathode" >
+    <volumeref ref="pmtCathodeVol_40028"/>
+  </skinsurface>
+ <volume name="pmtSkinVol_40028">
+         <materialref ref="Aluminium"/>
+         <solidref ref="pmtSkinSol_40028"/> 
+         <auxiliary auxtype="Color" auxvalue="grey"/> 
+</volume>
+<skinsurface name="pmtSkinVol_40028_skin" surfaceproperty="Aluminium" >
+    <volumeref ref="pmtSkinVol_40028"/>
+  </skinsurface>
+ <volume name="quartzVol_40028">
+         <materialref ref="Air"/>
+         <solidref ref="quartzLogicSol_40028"/> 
+         <physvol name="quartzRec_40028">
+			<volumeref ref="quartzRecVol_40028"/>
+			<position name="quartzRecPos_40028" unit="mm" x="0" y="0" z="0"/>
+			<rotation name="quartzRecRot_40028" unit="rad" x="0" y="0" z="0"/>
+</physvol> 
+
+
+<physvol name="ref_40028">
+			<volumeref ref="refVol_40028"/>
+			<position name="refPos_40028" unit="mm" x="0" y="0" z="77.5"/>
+			<rotation name="refRot_40028" unit="rad" x="-PI/2" y="0" z="0"/>
+</physvol> 
+
+        <physvol name="refSkin_40028">
+			<volumeref ref="refVolSkin_40028"/>
+			<position name="refSkinPos_40028" unit="mm" x="0" y="0" z="77.5"/>
+			<rotation name="refSkinRot_40028" unit="rad" x="-PI/2" y="0" z="0"/>
+</physvol> 
+
+      <physvol name="reflector_40028">
+			<volumeref ref="reflectorVol_40028"/>
+			<position name="reflectorPos_40028" unit="mm" x="0" y="0" z="77.5"/>
+			<rotation name="reflectorRot_40028" unit="rad" x="-PI/2" y="0" z="0"/>
+</physvol> 
+
+
+
+        <physvol name="lg_40028">
+			<volumeref ref="lgVol_40028"/>
+			<position name="lgPos_40028" unit="mm" x="-22.4240602348011" y="0" z="271.24538168043"/>
+			<rotation name="lgRot_40028" unit="rad" x="0" y="0.0523598775598299" z="0"/>
+</physvol> 
+
+      <physvol name="lgSkin_40028">
+			<volumeref ref="lgVolSkin_40028"/>
+			<position name="lgSkinPos_40028" unit="mm" x="-22.4240602348011" y="0" z="271.24538168043"/>
+			<rotation name="lgSkinRot_40028" unit="rad" x="0" y="0.0523598775598299" z="0"/>
+</physvol> 
+
+
+      <physvol name="pmt_40028">
+			<volumeref ref="pmtVol_40028"/>
+			<position name="pmtPos_40028" unit="mm" x="-34.6693132607876" y="0" z="504.898728445096"/>
+			<rotation name="pmtRot_40028" unit="rad" x="0" y="0.0523598775598299" z="0"/>
+</physvol> 
+
+      <physvol name="pmtCathode_40028">
+			<volumeref ref="pmtCathodeVol_40028"/>
+			<position name="pmtCathodePos_40028" unit="mm" x="-30.6414333964182" y="0" z="428.042202191315"/>
+			<rotation name="pmtCathodeRot_40028" unit="rad" x="0" y="0.0523598775598299" z="0"/>
+</physvol> 
+
+      <physvol name="pmtSkin_40028">
+			<volumeref ref="pmtSkinVol_40028"/>
+			<position name="pmtSkinPos_40028" unit="mm" x="-34.5895532634734" y="0" z="503.37681703413"/>
+			<rotation name="pmtSkinRot_40028" unit="rad" x="0" y="0.0523598775598299" z="0"/>
+</physvol> 
+  
+
+
+</volume>
+<volume name="logicMotherVol_r4t"> 
+	<materialref ref="Air"/>
+	<solidref ref="logicMotherSol_r4t"/>
+<physvol name="detector_40028">
+			<volumeref ref="quartzVol_40028"/>
+			<position name="detectorPos_40028" unit="mm" x="290" y="-198.599933556011" z="870.123161622278"/>
+			<rotation name="detectorRot_40028" unit="rad" x="6.05878583192317" y="0.0523598775598299" z="0"/>
+</physvol> 
+</volume>
+</structure>
+
+<setup name="logicMother_r4t" version="1.0">
+	<world ref="logicMotherVol_r4t"/>
+</setup>
+
+</gdml>

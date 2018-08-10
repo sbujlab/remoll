@@ -1,0 +1,27 @@
+# store tracks
+#/tracking/storeTrajectory 1
+
+# This must be called before initialize
+/remoll/setgeofile geometry_optimize/mollerMother_fullArray.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/printgeometry true
+
+/remoll/evgen/set blackening 
+/run/beamOn 0
+
+#/remoll/evgen/blackening/phiBounds 170 190
+
+/remoll/beamene 11 GeV
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite/set true
+
+/process/list
+
+/remoll/filename remollout_MainzFullArray.root
+
+/run/beamOn 100000

@@ -1,7 +1,7 @@
 # Recreating the Mainz beam test
 
 # These must be called before initialize
-/remoll/setgeofile geometry_Mainz/mollerMother.gdml
+/remoll/setgeofile geometry_optimize/mollerMother.gdml
 /remoll/physlist/optical/enable
 
 # This must be explicitly called
@@ -31,19 +31,12 @@
 
 # Electrons incident on quartz------------
 
-# Ring 5 Open Quartz center --------------
-#/remoll/evgen/beam/x -987.5 mm
-#/remoll/evgen/beam/z -500 mm
-
+/remoll/evgen/beam/x -987.5 mm
+/remoll/evgen/beam/z -500 mm
 /remoll/beamene 855 MeV
-
-# Ring 1 Open Quartz center --------------
-/remoll/evgen/beam/x -772.058588937179
-/remoll/evgen/beam/y 615.696179335499 
-/remoll/evgen/beam/z -500
 
 /remoll/evgen/beam/partName e-
 
-/remoll/filename remollout_Mainz_SE.root
+/remoll/filename remollout_refAngle9.root
 
-/run/beamOn 1000
+/run/beamOn 10000

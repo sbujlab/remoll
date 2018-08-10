@@ -48,7 +48,6 @@ remollGenTF1::remollGenTF1()
     fElasticFunc(0),
     fInelasticFunc(0)
 {
-    G4cerr << "Initializing TF1 generator" << G4endl;
     fApplyMultScatt = true;
     r_t = CLHEP::RandFlat::shoot(600,1200);
     fZpos = (28.5*m - 0.52*m);

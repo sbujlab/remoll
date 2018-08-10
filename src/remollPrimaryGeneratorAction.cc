@@ -32,6 +32,7 @@
 #include "remollGen12CElastic.hh"
 #include "remollGenFlat.hh"
 #include "remollGenExternal.hh"
+#include "remollGenBlackening.hh"
 #include "remollGenAl.hh"
 #include "remollGenLUND.hh"
 
@@ -58,6 +59,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     fEvGenMap["quasielasticAl"] = new remollGenAl(1);
     fEvGenMap["inelasticAl"] = new remollGenAl(2);
     fEvGenMap["external"] = new remollGenExternal();
+    fEvGenMap["blackening"] = new remollGenBlackening();
     fEvGenMap["pion_LUND"] = new remollGenLUND();
     fEvGenMap["carbon"] = new remollGen12CElastic();
 

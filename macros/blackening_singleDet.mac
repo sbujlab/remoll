@@ -1,0 +1,26 @@
+# store tracks
+#/tracking/storeTrajectory 1
+
+# This must be called before initialize
+/remoll/setgeofile geometry_optimize/singleDet/mollerMother_singleDet.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/printgeometry true
+
+/remoll/evgen/set blackening 
+/run/beamOn 0
+
+/remoll/evgen/blackening/useFirstSeptant true
+/remoll/beamene 11 GeV
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite/set true
+
+/process/list
+
+/remoll/filename ringSignalOutput/remollout_r5o.root
+
+/run/beamOn 10

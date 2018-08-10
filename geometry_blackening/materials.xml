@@ -258,7 +258,6 @@
       <atom unit="g/mole" value="26.981"/>
    </material>
 
-
 <!--Better definition would be to start from isotopes and build natural lead -->
     <material Z="82" name="Lead" state="solid">
       <MEE unit="eV" value="823"/>

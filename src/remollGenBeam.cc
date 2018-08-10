@@ -20,42 +20,41 @@
 
 remollGenBeam::remollGenBeam()
 : remollVEventGen("beam"),
-  fXpos(0.0), fYpos(0.0), fZpos(-.5*m),
-  fXmomentum(0.0), fYmomentum(0.0), fZmomentum(1.0),
-  fParticleName("e-")
+    fXhitPos(0.0), fYhitPos(0.0),
+    fZhitPos(0.0), fZoffset(-500),
+    fTheta(0), fDeltaPhi(0),
+    fParticleName("e-")
 {
     fApplyMultScatt = true;
-
-    fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginY,"y coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethodWithUnit("z","mm",&remollGenBeam::SetOriginZ,"z coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetMomentumX,"x component of momentum direction");
-    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetMomentumY,"y component of momentum direction");
-    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetMomentumZ,"z component of momentum direction");
-    fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
-    fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
-    fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
+    
+    fThisGenMessenger->DeclareMethodWithUnit("hitx","mm",&remollGenBeam::SetHitX,"x coordinate of hit position for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("hity","mm",&remollGenBeam::SetHitY,"y coordinate of hit position for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("hitz","mm",&remollGenBeam::SetHitZ,"z coordinate of hit position for the beam");
+    
+    fThisGenMessenger->DeclareMethodWithUnit("theta","deg",&remollGenBeam::SetTheta,"angle of beam with respect to z-axis");
+    fThisGenMessenger->DeclareMethodWithUnit("zOffset","mm", &remollGenBeam::SetZOffset,"distance from particle origin to hit in z-direction");
+    
     fThisGenMessenger->DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
 }
 
 remollGenBeam::~remollGenBeam() { }
 
-void remollGenBeam::SetOriginX(double x){ fXpos = x; }
-void remollGenBeam::SetOriginY(double y){ fYpos = y; }
-void remollGenBeam::SetOriginZ(double z){ fZpos = z; }
+void remollGenBeam::SetHitX(double x){ fXhitPos = x; }
+void remollGenBeam::SetHitY(double y){ fYhitPos = y; }
+void remollGenBeam::SetHitZ(double z){ fZhitPos = z; }
 
-void remollGenBeam::SetMomentumX(double px){ fXmomentum = px; }
-void remollGenBeam::SetMomentumY(double py){ fYmomentum = py; }
-void remollGenBeam::SetMomentumZ(double pz){ fZmomentum = pz; }
+void remollGenBeam::SetZOffset(double zOff){ fZoffset = zOff; } 
 
-void remollGenBeam::SetPolarizationX(double sx){ fXPolarization = sx; }
-void remollGenBeam::SetPolarizationY(double sy){ fYPolarization = sy; }
-void remollGenBeam::SetPolarizationZ(double sz){ fZPolarization = sz; }
+void remollGenBeam::SetTheta(double theta){ fTheta = theta; }
+void remollGenBeam::SetDeltaPhi(double dphi){ fDeltaPhi = dphi; }
 
 void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
 void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
+    double vX, vY, vZ;
+    double pX, pY, pZ;
+
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4ParticleDefinition* particle = particleTable->FindParticle(fParticleName);
 
@@ -63,20 +62,34 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     double E = fBeamTarg->fBeamEnergy;
     double m = particle->GetPDGMass();
     double p = sqrt(E*E - m*m);
+    
 
+    
+    pX = cos(fDeltaPhi)*sin(fTheta)*p;
+    pY = sin(fDeltaPhi)*sin(fTheta)*p;
+    pZ = cos(fTheta)*p;
+    
+    evt->fBeamMomentum = p*G4ThreeVector(pX, pY, pZ);
     evt->fBeamE = E;
-    evt->fBeamMomentum = p*G4ThreeVector(fXmomentum, fYmomentum, fZmomentum).unit();
-    evt->fBeamPolarization = G4ThreeVector(fXPolarization, fYPolarization, fZPolarization);
 
+    // Calculate origin position based on hit coordinates and angles.
+    
+    vZ = fZhitPos - fZoffset;
+
+    double radius = fZoffset*tan(fTheta);
+    
+    vX = fXhitPos - radius*cos(fDeltaPhi);
+    vY = fYhitPos - radius*sin(fDeltaPhi);
+    
     // Override target sampling z
-    evt->fVertexPos.setX( fXpos );
-    evt->fVertexPos.setY( fYpos );
-    evt->fVertexPos.setZ( fZpos );
+    evt->fVertexPos.setX( vX );
+    evt->fVertexPos.setY( vY );
+    evt->fVertexPos.setZ( vZ );
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
 	    evt->fBeamMomentum, 
-	    fParticleName,
-            evt->fBeamPolarization);
+	    fParticleName);
+    
 
     evt->SetEffCrossSection(0.0);
     evt->SetAsymmetry(0.0);

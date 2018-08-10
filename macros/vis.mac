@@ -13,7 +13,7 @@
 # This is the current working geometry
 #/remoll/setgeofile geometry_tests/mollerMother_combined_local.gdml
 #/remoll/setgeofile geometry_single/mollerMother_single.gdml
-/remoll/setgeofile geometry_Mainz/mollerMother.gdml
+/remoll/setgeofile geometry_blackening/mollerMother.gdml
 
 #/remoll/likekryptonite  true
 

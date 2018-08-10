@@ -35,6 +35,7 @@
 #include "remollGenBlackening.hh"
 #include "remollGenAl.hh"
 #include "remollGenLUND.hh"
+#include "remollGenBlackening.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 : fEventGen(0),fPriGen(0),fParticleGun(0),fBeamTarg(0),fEvent(0),fMessenger(0)
@@ -62,6 +63,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     fEvGenMap["blackening"] = new remollGenBlackening();
     fEvGenMap["pion_LUND"] = new remollGenLUND();
     fEvGenMap["carbon"] = new remollGen12CElastic();
+    fEvGenMap["blackening"] = new remollGenBlackening();
 
     // Populate map with all possible primary generators
     fPriGenMap["particlegun"] = new G4ParticleGun();

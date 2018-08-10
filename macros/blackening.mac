@@ -22,6 +22,6 @@
 
 /process/list
 
-/remoll/filename remollout_MainzFullArray.root
+/remoll/filename remollout_FullArray.root
 
 /run/beamOn 100000

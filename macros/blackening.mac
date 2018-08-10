@@ -4,6 +4,8 @@
 # This must be called before initialize
 /remoll/setgeofile geometry_optimize/mollerMother_fullArray.gdml
 
+/remoll/physlist/optical/enable 
+
 # This must be explicitly called
 /run/initialize
 
@@ -24,4 +26,4 @@
 
 /remoll/filename remollout_FullArray.root
 
-/run/beamOn 100000
+/run/beamOn 10000

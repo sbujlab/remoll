@@ -25,7 +25,7 @@ remollGenBlackening::remollGenBlackening()
   : remollVEventGen("blackening"),
   fMinRad(600), fMaxRad(1200),
   fMinPhi(-180.0*deg), fMaxPhi(180.0*deg),
-  fSeptFold(true)
+  fSeptFold(false)
 {
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("minRad",&remollGenBlackening::SetMinRadius,"Minimum Radius for Blackening Study");
@@ -241,7 +241,6 @@ void remollGenBlackening::SamplePhysics(remollVertex* /* vert */, remollEvent* e
 {
   //Determine which scattering type to sample from
   double rndm = G4RandFlat::shoot(0.0,1.0);
-
   fMollerTree->GetEntry(fMollerEntry);
   fElasticTree->GetEntry(fElasticEntry);
   fInelasticTree->GetEntry(fInelasticEntry);

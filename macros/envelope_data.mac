@@ -19,10 +19,10 @@
 /remoll/rasy 10 cm
 
 /remoll/beamene 100 MeV
-/remoll/evgen/set beam
-/run/beamOn 0
-/remoll/filename remollout_raytrace_100k.root
-/run/beamOn 100000
+#/remoll/evgen/set beam
+#/run/beamOn 0
+#/remoll/filename remollout_raytrace_100k.root
+#/run/beamOn 100000
 
 
 
@@ -44,31 +44,31 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-#/remoll/kryptonite/set true
+/remoll/kryptonite/set true
 
 
 #create moller output file
+/remoll/tracking/set 0
 /remoll/evgen/set moller
-/run/beamOn 0
-/remoll/filename remollout_moller_100k.root
-/run/beamOn 10000
+/remoll/filename remollout_moller_5M.root
+/run/beamOn 5000000
 
 #create elastic output file
-/remoll/evgen/set elastic
-/run/beamOn 0
-/remoll/filename remollout_elastic_100k.root
-/run/beamOn 100000
+#/remoll/evgen/set elastic
+#/run/beamOn 0
+#/remoll/filename remollout_elastic_500k.root
+#/run/beamOn 500000
 
 #create inelastic output file
-/remoll/evgen/set inelastic
-/run/beamOn 0
-/remoll/filename remollout_inelastic_100k.root
-/run/beamOn 100000
+#/remoll/evgen/set inelastic
+#/run/beamOn 0
+#/remoll/filename remollout_inelastic_500k.root
+#/run/beamOn 500000
 
 #create beam generator output file (for all types of scattering together)
-/remoll/evgen/set beam
-/run/beamOn 0
-/remoll/filename remollout_beam_100k.root
-/run/beamOn 100000
+#/remoll/evgen/set beam
+#/run/beamOn 0
+#/remoll/filename remollout_beam_100k.root
+#/run/beamOn 100000
 
 

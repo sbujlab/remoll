@@ -6,6 +6,8 @@
 #include "remollIO.hh"
 
 #include "G4GenericMessenger.hh"
+#include "G4GeometryManager.hh"
+#include "G4GeometryTolerance.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
@@ -42,21 +44,29 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
-remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
-: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),fGDMLParser(0),
-  fGDMLValidate(false),fGDMLOverlapCheck(true),
-  fMessenger(0),fGeometryMessenger(0),
+remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile)
+: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),
+  fGDMLParser(0),
+  fGDMLValidate(false),
+  fGDMLOverlapCheck(true),
+  fMessenger(0),
+  fGeometryMessenger(0),
+  fUserLimitsMessenger(0),
   fVerboseLevel(0),
-  fWorldVolume(0)
+  fWorldVolume(0),
+  fWorldName(name)
 {
   // If gdmlfile is non-empty
   if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
+
+  // Create GDML parser
+  fGDMLParser = new G4GDMLParser();
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
   fMessenger->DeclareMethod(
       "setgeofile",
-      &remollDetectorConstruction::SetDetectorGeomFile,
+      &remollDetectorConstruction::SetGDMLFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
@@ -82,7 +92,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
       "Remoll geometry properties");
   fGeometryMessenger->DeclareMethod(
       "setfile",
-      &remollDetectorConstruction::SetDetectorGeomFile,
+      &remollDetectorConstruction::SetGDMLFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fGeometryMessenger->DeclareProperty(
@@ -123,6 +133,11 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
       "Print the geometry tree")
       .SetStates(G4State_Idle)
       .SetDefaultValue("false");
+  fGeometryMessenger->DeclareMethod(
+      "printoverlaps",
+      &remollDetectorConstruction::PrintOverlaps,
+      "Print the geometry overlap")
+      .SetStates(G4State_Idle);
 
   // Create user limits messenger
   fUserLimitsMessenger = new G4GenericMessenger(this,
@@ -204,7 +219,7 @@ void remollDetectorConstruction::PrintGDMLWarning() const
 G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 {
     // Clear parser
-    //fGDMLParser->Clear(); // FIXME doesn't clear auxmap
+    //fGDMLParser->Clear(); // FIXME doesn't clear auxmap, instead just recreate
     if (fGDMLParser) delete fGDMLParser;
     fGDMLParser = new G4GDMLParser();
 
@@ -230,19 +245,37 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+    G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
 
+    // Print tolerances
+    if (fVerboseLevel > 0) {
+      G4cout << "Computed surface tolerance = "
+             << G4GeometryTolerance::GetInstance()->GetSurfaceTolerance()/mm
+             << " mm" << G4endl;
+      G4cout << "Computed angular tolerance = "
+             << G4GeometryTolerance::GetInstance()->GetAngularTolerance()/rad
+             << " rad" << G4endl;
+      G4cout << "Computed radial tolerance = "
+             << G4GeometryTolerance::GetInstance()->GetRadialTolerance()/mm
+             << " mm" << G4endl;
+    }
+
+    // Print overlaps
+    if (fGDMLOverlapCheck)
+      PrintGeometryTree(worldvolume,0,true,false);
 
     // Add GDML files to IO
     remollIO* io = remollIO::GetInstance();
     io->GrabGDMLFiles(fGDMLFile);
 
+    // Change directory back
     if (chdir(cwd)) {
       G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
       exit(-1);
     }
 
     // Return world volume
-    return fGDMLParser->GetWorldVolume();
+    return worldvolume;
 }
 
 void remollDetectorConstruction::PrintAuxiliaryInfo() const
@@ -468,9 +501,9 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
       G4cout << G4endl << G4endl;
 
 
-  // Set the world volume invisible
+  // Set the world volume to wireframe
   G4VisAttributes* motherVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  motherVisAtt->SetVisibility(false);
+  motherVisAtt->SetForceWireframe(true);
   fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
 
   // Set all immediate daughters of the world volume to wireframe
@@ -502,6 +535,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           vit != (*iter).second.end(); vit++) {
 
           if ((*vit).type == "SensDet") {
+              G4String det_name = (*vit).value;
 
               // Also allow specification of det number ///////////////////
               G4String det_type = "";
@@ -547,6 +581,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                   if (det_type.size() > 0) det->SetDetectorType(det_type);
 
                   SDman->AddNewDetector(det);
+
+                  // Register detector IDs and names
+                  remollIO* io = remollIO::GetInstance();
+                  io->RegisterDetector(myvol->GetName(), det_name, det_no);
 
                   thisdet = det;
               }
@@ -635,7 +673,7 @@ void remollDetectorConstruction::SetUserLimits(G4String type, G4String name, G4S
 void remollDetectorConstruction::ReloadGeometry(const G4String gdmlfile)
 {
   // Set new geometry
-  SetDetectorGeomFile(gdmlfile);
+  SetGDMLFile(gdmlfile);
 
   // Trigger Construct and ConstructSDandField
   G4RunManager::GetRunManager()->ReinitializeGeometry(true);
@@ -701,32 +739,39 @@ std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
 void remollDetectorConstruction::PrintGeometryTree(
     G4VPhysicalVolume* aVolume,
     G4int depth,
-    G4bool surfchk)
+    G4bool surfchk,
+    G4bool print)
 {
   // Null volume
   if (aVolume == 0) aVolume = fWorldVolume;
 
   // Print spaces
-  for (int isp = 0; isp < depth; isp++) { G4cout << "  "; }
+  if (print) {
+    for (int isp = 0; isp < depth; isp++) { G4cout << "  "; }
+  }
   // Print name
-  G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
-         << aVolume->GetLogicalVolume()->GetName() << " "
-         << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
-         << aVolume->GetLogicalVolume()->GetMaterial()->GetName() << " "
-	 << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
+  if (print) {
+    G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
+           << aVolume->GetLogicalVolume()->GetName() << " "
+           << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
+           << aVolume->GetLogicalVolume()->GetMaterial()->GetName() << " "
+           << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
+  }
   // Print sensitive detector
-  if (aVolume->GetLogicalVolume()->GetSensitiveDetector())
+  if (print && aVolume->GetLogicalVolume()->GetSensitiveDetector())
   {
     G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
                             ->GetFullPathName();
   }
-  G4cout << G4endl;
+  if (print) {
+    G4cout << G4endl;
+  }
 
-  // Check overlapping volumes
-  if (surfchk) aVolume->CheckOverlaps();
+  // Check overlapping volumes (tolerance of 1 mm)
+  if (surfchk) aVolume->CheckOverlaps(1000,1.0*mm,false);
 
   // Descend down the tree
   for (int i = 0; i < aVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
-    PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk);
+    PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk,print);
   }
 }

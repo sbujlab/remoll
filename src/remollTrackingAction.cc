@@ -83,8 +83,6 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
     }
   }
 
-}
-
 void remollTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 {
   G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();

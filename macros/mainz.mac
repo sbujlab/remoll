@@ -31,10 +31,15 @@
 
 # Electrons incident on quartz------------
 
+<<<<<<< HEAD
 # Ring 5 Open Quartz center --------------
 #/remoll/evgen/beam/x -987.5 mm
 #/remoll/evgen/beam/z -500 mm
 
+=======
+/remoll/evgen/beam/x -987.5 mm
+/remoll/evgen/beam/z -10.1 mm
+>>>>>>> b407b3d641bd443d79b4ab3320aea9ab4f6e49b6
 /remoll/beamene 855 MeV
 
 # Ring 1 Open Quartz center --------------
@@ -46,4 +51,8 @@
 
 /remoll/filename remollout_Mainz.root
 
+<<<<<<< HEAD
 /run/beamOn 1000
+=======
+/run/beamOn 100
+>>>>>>> b407b3d641bd443d79b4ab3320aea9ab4f6e49b6

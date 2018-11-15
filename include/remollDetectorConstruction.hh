@@ -20,7 +20,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
 
-    remollDetectorConstruction(const G4String& gdmlfile);
+    remollDetectorConstruction(const G4String& name, const G4String& gdmlfile);
     virtual ~remollDetectorConstruction();
 
   public:
@@ -29,14 +29,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     void ConstructSDandField();
 
     void ReloadGeometry(const G4String gdmlfile);
-
-    void SetDetectorGeomFile(G4String name) {
-      size_t i = name.rfind('/');
-      if (i != std::string::npos) {
-        fGDMLPath = name.substr(0,i);
-      } else fGDMLPath = ".";
-      fGDMLFile = name.substr(i + 1);
-    }
 
     void SetUserLimits(G4String type, G4String name, G4String value_units);
     void SetUserLimit(G4UserLimits* userlimits, const G4String limit, const G4String value_units);
@@ -51,6 +43,15 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     G4String fGDMLPath;
     G4String fGDMLFile;
+
+    void SetGDMLFile(G4String gdmlfile) {
+      size_t i = gdmlfile.rfind('/');
+      if (i != std::string::npos) {
+        fGDMLPath = gdmlfile.substr(0,i);
+      } else fGDMLPath = ".";
+      fGDMLFile = gdmlfile.substr(i + 1);
+    }
+
     G4GDMLParser *fGDMLParser;
 
     G4bool fGDMLValidate;
@@ -69,17 +70,21 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     static G4ThreadLocal remollGlobalField* fGlobalField;
 
-    G4VPhysicalVolume*      fWorldVolume;
+    G4VPhysicalVolume* fWorldVolume;
+    G4String           fWorldName;
 
   public:
 
     void PrintElements();
     void PrintMaterials();
+    void PrintOverlaps() {
+      PrintGeometryTree(0,0,true,false);
+    }
     void PrintGeometry(G4bool surfchk = false) {
-      PrintGeometryTree(0,0,surfchk);
+      PrintGeometryTree(0,0,surfchk,true);
     }
     void PrintGeometryTree(G4VPhysicalVolume* aVolume = 0,
-      G4int depth = 0, G4bool surfchk = false);
+      G4int depth = 0, G4bool surfchk = false, G4bool print = true);
 
     std::vector<G4VPhysicalVolume*> GetPhysicalVolumes(
         G4VPhysicalVolume* physical_volume,
@@ -88,6 +93,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
   private:
 
     void PrintGDMLWarning() const;
+
     G4VPhysicalVolume* ParseGDMLFile();
 
     void PrintAuxiliaryInfo() const;

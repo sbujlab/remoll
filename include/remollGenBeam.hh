@@ -11,31 +11,41 @@
 #include "remollVEventGen.hh"
 
 class remollGenBeam : public remollVEventGen {
-    public:
-	remollGenBeam();
-	virtual ~remollGenBeam();
-    void SetHitX(double x);
-    void SetHitY(double y);
-    void SetHitZ(double z);
+  public:
+    remollGenBeam();
+    virtual ~remollGenBeam();
 
-    void SetTheta(double theta);
-    void SetDeltaPhi(double dphi);
+    void SetOrigin(G4ThreeVector origin);
+    void SetOriginX(double x);
+    void SetOriginY(double y);
+    void SetOriginZ(double z);
 
-    void SetZOffset(double zOff);
+    void SetDirection(G4ThreeVector direction);
+    void SetDirectionX(double dx);
+    void SetDirectionY(double dy);
+    void SetDirectionZ(double dz);
+
+    void SetPolarization(G4ThreeVector polarization);
+    void SetPolarizationX(double sx);
+    void SetPolarizationY(double sy);
+    void SetPolarizationZ(double sz);
 
     void SetPartName(G4String& name);
 
-    private:
-	void SamplePhysics(remollVertex *, remollEvent *);
+  private:
+    void SamplePhysics(remollVertex *, remollEvent *);
 
-	double fXhitPos;
-	double fYhitPos;
-	double fZhitPos;
+    double fXpos;
+    double fYpos;
+    double fZpos;
 
-    double fTheta;
-    double fDeltaPhi;
+    double fXdir;
+    double fYdir;
+    double fZdir;
 
-    double fZoffset;
+    double fXpol;
+    double fYpol;
+    double fZpol;
 
     G4String fParticleName;
 };

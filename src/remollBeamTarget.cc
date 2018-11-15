@@ -284,12 +284,12 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 {
-    // Create Vertex
+    // Create vertex
     remollVertex vertex;
 
-    // No sampling required 
-    if (samp == kNoTargetVolume){
-        return vertex;
+    // No sampling required
+    if (samp == kNoTargetVolume) {
+      return vertex;
     }
 
     // Check if target mother volume exists
@@ -317,13 +317,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
     switch( samp ){
-	case kActiveTargetVolume:
-	    total_effective_length = fActiveTargetEffectiveLength;
-	    break;
+        case kActiveTargetVolume:
+            total_effective_length = fActiveTargetEffectiveLength;
+            break;
 
-	case kAllTargetVolumes:
-	    total_effective_length = fTotalTargetEffectiveLength;
-	    break;
+        case kAllTargetVolumes:
+            total_effective_length = fTotalTargetEffectiveLength;
+            break;
 
         case kNoTargetVolume:
             // nothing to do, just avoid compilation warning
@@ -351,7 +351,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !found_active_volume; it++ ){
 
         // Relative position of this target volume in mother volume
-        G4double relative_position = (*it)->GetFrameTranslation().z();
+        //G4double relative_position = (*it)->GetFrameTranslation().z();
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();

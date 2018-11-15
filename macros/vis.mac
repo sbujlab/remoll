@@ -4,7 +4,11 @@
 /remoll/physlist/optical/enable
 
 # This is the current working geometry
+<<<<<<< HEAD
 /remoll/setgeofile geometry/mollerMother_5open.gdml
+=======
+/remoll/setgeofile geometry_tests/mollerMother_5open.gdml
+>>>>>>> b407b3d641bd443d79b4ab3320aea9ab4f6e49b6
 
 #/remoll/likekryptonite  true
 
@@ -13,8 +17,17 @@
 
 #/remoll/setphysicslist QGSP_BERT_EMV
 
+<<<<<<< HEAD
 
 /run/initialize
+=======
+/run/initialize
+
+
+#/remoll/beamene 11.0 GeV
+/remoll/beamene 855 MeV
+/remoll/beamcurr 50 microampere
+>>>>>>> b407b3d641bd443d79b4ab3320aea9ab4f6e49b6
 #/remoll/optical true
 #/remoll/addfield CLEO_rm.dat
 /control/execute vis/vis.mac
@@ -27,6 +40,7 @@
 /remoll/rasy 5 mm 
 
 ## Beam generator
+<<<<<<< HEAD
 # /remoll/evgen/set beam
 # /remoll/evgen/beam/x -987.5
 # /remoll/evgen/beam/z -20.0
@@ -46,4 +60,23 @@
 
 /remoll/beamene 11.0 GeV
 /remoll/beamcurr 50 microampere
+=======
+/remoll/evgen/set beam
+/remoll/evgen/beam/x -987.5
+/remoll/evgen/beam/z -120.0
+/remoll/evgen/beam/px -0.0523
+/remoll/evgen/beam/pz 0.9986 
+/remoll/filename remollout_r5o_beam_default.root
+
+
+## External Generator
+#/remoll/evgen/set external
+#/remoll/evgen/external/file remoll_moller_envelope_noCol4_noCoils_500k_LGtest_det28.root
+#/remoll/evgen/external/detid 28
+#/remoll/evgen/external/startEvent 0
+#/remoll/evgen/external/zOffset -28550.0
+#/remoll/filename remollout_r5o_external_default.root
+
+
+>>>>>>> b407b3d641bd443d79b4ab3320aea9ab4f6e49b6
 #/run/beamOn 100

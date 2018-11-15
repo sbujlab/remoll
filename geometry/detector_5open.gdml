@@ -28,7 +28,7 @@
 <skinsurface name="quartzRecVol_50001_skin" surfaceproperty="Quartz" >
          <volumeref ref="quartzRecVol_50001"/>
 </skinsurface>
- <volume name="refVol_50001">
+<volume name="refVol_50001">
          <materialref ref="Air"/>
          <solidref ref="refSol1_50001"/> 
          <auxiliary auxtype="Color" auxvalue="green"/> 
@@ -47,6 +47,7 @@
 <skinsurface name="refVolSkin_50001_skin" surfaceproperty="Mylar" >
          <volumeref ref="refVolSkin_50001"/>
 </skinsurface>
+
 <volume name="reflectorVol_50001">
          <materialref ref="Aluminium"/>
          <solidref ref="reflectorSol_50001"/> 
@@ -58,7 +59,8 @@
 <skinsurface name="reflectorVol_50001_skin" surfaceproperty="Mylar" >
          <volumeref ref="reflectorVol_50001"/>
 </skinsurface>
- <volume name="lgVol_50001">
+ 
+<volume name="lgVol_50001">
          <materialref ref="Air"/>
          <solidref ref="lgSol_50001"/> 
          <auxiliary auxtype="Color" auxvalue="blue"/> 
@@ -74,10 +76,12 @@
          <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
 	     <auxiliary auxtype="DetNo" auxvalue="50501"/>  
 </volume>
+
 <skinsurface name="lgVolSkin_50001_skin" surfaceproperty="Mylar" >
          <volumeref ref="lgVolSkin_50001"/>
 </skinsurface>
- <volume name="pmtVol_50001">
+ 
+<volume name="pmtVol_50001">
          <materialref ref="Aluminium"/>
          <solidref ref="pmtSol_50001"/> 
          <auxiliary auxtype="Color" auxvalue="red"/> 
@@ -88,7 +92,8 @@
 <skinsurface name="pmtVol_50001_skin" surfaceproperty="Aluminium" >
          <volumeref ref="pmtVol_50001"/>
 </skinsurface>
- <volume name="pmtCathodeVol_50001">
+ 
+<volume name="pmtCathodeVol_50001">
          <materialref ref="Photocathode"/>
          <solidref ref="pmtCathodeSol_50001"/> 
          <auxiliary auxtype="Color" auxvalue="green"/> 
@@ -96,18 +101,22 @@
          <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
          <auxiliary auxtype="DetNo" auxvalue="50701"/>  
 </volume>
+
 <skinsurface name="pmtCathodeVol_50001_skin" surfaceproperty="Cathode" >
          <volumeref ref="pmtCathodeVol_50001"/>
 </skinsurface>
- <volume name="pmtSkinVol_50001">
+ 
+<volume name="pmtSkinVol_50001">
          <materialref ref="Aluminium"/>
          <solidref ref="pmtSkinSol_50001"/> 
          <auxiliary auxtype="Color" auxvalue="grey"/> 
 </volume>
+
 <skinsurface name="pmtSkinVol_50001_skin" surfaceproperty="Aluminium" >
          <volumeref ref="pmtSkinVol_50001"/>
 </skinsurface>
- <volume name="quartzVol_50001">
+ 
+<volume name="quartzVol_50001">
          <materialref ref="Air"/>
          <solidref ref="quartzLogicSol_50001"/> 
          <physvol name="quartzRec_50001">
@@ -171,16 +180,21 @@
 
 
 </volume>
+
 <volume name="logicMotherVol_5open"> 
 	<materialref ref="Air"/>
 	<solidref ref="logicMotherSol_5open"/>
-<physvol name="detector_50001">
+
+        <physvol name="detector_50001">
 			<volumeref ref="quartzVol_50001"/>
 			<position name="detectorPos_50001" unit="mm" x="-120" y="0" z="987.5"/>
 			<rotation name="detectorRot_50001" unit="rad" x="0" y="0.0523598775598299" z="0"/>
-</physvol> 
+        </physvol> 
+
 </volume>
+
 </structure>
+
 
 <setup name="logicMother_5open" version="1.0">
 	<world ref="logicMotherVol_5open"/>

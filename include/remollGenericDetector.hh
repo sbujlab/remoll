@@ -119,51 +119,51 @@ class remollGenericDetector : public G4VSensitiveDetector {
         }
 
     public:
-	remollGenericDetector( G4String name, G4int detnum );
-	virtual ~remollGenericDetector();
+        remollGenericDetector( G4String name, G4int detnum );
+        virtual ~remollGenericDetector();
 
-	virtual void Initialize(G4HCofThisEvent*);
-	virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
-	virtual void EndOfEvent(G4HCofThisEvent*);
+        virtual void Initialize(G4HCofThisEvent*);
+        virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
+        virtual void EndOfEvent(G4HCofThisEvent*);
 
-      void BuildStaticMessenger();
+        void BuildStaticMessenger();
 
-	virtual void SetDetectorType(G4String det_type) {
-          if (det_type.compareTo("charged",G4String::ignoreCase) == 0) {
-            G4cout << SensitiveDetectorName << " detects charged particles" << G4endl;
-            fDetectOpticalPhotons = false;
-            fDetectLowEnergyNeutrals = false;
-          }
-	  if (det_type.compareTo("lowenergyneutral",G4String::ignoreCase) == 0) {
-            G4cout << SensitiveDetectorName << " detects low energy neutrals" << G4endl;
-	    fDetectLowEnergyNeutrals = true;
-	  }
-          if (det_type.compareTo("opticalphoton",G4String::ignoreCase) == 0) {
-            G4cout << SensitiveDetectorName << " detects optical photons" << G4endl;
-            fDetectOpticalPhotons = true;
-            fDetectLowEnergyNeutrals = true;
-          }
-        if (det_type.compareTo("boundaryhits",G4String::ignoreCase) == 0) {
-            G4cout << SensitiveDetectorName << " detects charged particle hits only on the entering boundary" << G4endl;
-            fDetectOpticalPhotons = false;
-            fDetectLowEnergyNeutrals = false;
-            fBoundaryHits = true;
+        virtual void SetDetectorType(G4String det_type) {
+            if (det_type.compareTo("charged",G4String::ignoreCase) == 0) {
+                G4cout << SensitiveDetectorName << " detects charged particles" << G4endl;
+                fDetectOpticalPhotons = false;
+                fDetectLowEnergyNeutrals = false;
+            }
+            if (det_type.compareTo("lowenergyneutral",G4String::ignoreCase) == 0) {
+                G4cout << SensitiveDetectorName << " detects low energy neutrals" << G4endl;
+                fDetectLowEnergyNeutrals = true;
+            }
+            if (det_type.compareTo("opticalphoton",G4String::ignoreCase) == 0) {
+                G4cout << SensitiveDetectorName << " detects optical photons" << G4endl;
+                fDetectOpticalPhotons = true;
+                fDetectLowEnergyNeutrals = true;
+            }
+            if (det_type.compareTo("boundaryhits",G4String::ignoreCase) == 0) {
+                G4cout << SensitiveDetectorName << " detects charged particle hits only on the entering boundary" << G4endl;
+                fDetectOpticalPhotons = false;
+                fDetectLowEnergyNeutrals = false;
+                fBoundaryHits = true;
+            }
         }
-	}
 
         void SetEnabled(G4bool flag = true) {
-          fEnabled = flag;
+            fEnabled = flag;
         };
         void SetDisabled(G4bool flag = true) {
-          fEnabled = !flag;
+            fEnabled = !flag;
         };
         void PrintEnabled() const {
-          G4cout << "Det " << GetName() << " (" << fDetNo << ") "
-                 << (fEnabled? "enabled" : "disabled") << G4endl;
+            G4cout << "Det " << GetName() << " (" << fDetNo << ") "
+                << (fEnabled? "enabled" : "disabled") << G4endl;
         };
 
     private:
-	remollGenericDetectorHitCollection *fHitColl;
+        remollGenericDetectorHitCollection *fHitColl;
 	remollGenericDetectorSumCollection *fSumColl;
 
 	G4int fHCID, fSCID;

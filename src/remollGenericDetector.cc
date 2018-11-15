@@ -25,8 +25,8 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   assert( fDetNo > 0 );
 
   fDetectSecondaries = true;
-  fDetectOpticalPhotons = true;
-  fDetectLowEnergyNeutrals = true;
+  fDetectOpticalPhotons = false;
+  fDetectLowEnergyNeutrals = false;
   fBoundaryHits = false;
 
   std::stringstream genhit;

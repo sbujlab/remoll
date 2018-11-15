@@ -80,13 +80,14 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     G4cerr << "Could not find branch hit in event file " << filename << G4endl;
     return;
   }
-  if (fTree->GetBranch("ev")) {
-    fTree->SetBranchAddress("ev", &fEvent);
-  } else {
-    G4cerr << "Could not find branch ev in event file " << filename << G4endl;
-    return;
-  }
-
+/* event tree removed by Cameron 11/15/2018
+*  if (fTree->GetBranch("ev")) {
+*    fTree->SetBranchAddress("ev", &fEvent);
+*  } else {
+*    G4cerr << "Could not find branch ev in event file " << filename << G4endl;
+*    return;
+*  }
+*/
 }
 
 void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt)
@@ -106,12 +107,17 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
         fEntry = 0;
     fTree->GetEntry(fEntry++);
     
-    // Weighting completely handled by event file
-    evt->SetEffCrossSection(fEvent->xs*microbarn);
-    evt->SetQ2(fEvent->Q2);
-    evt->SetW2(fEvent->W2);
-    evt->SetAsymmetry(fEvent->A*ppb);
-
+/* event tree removed by Cameron 11/15/2018
+*    // Weighting completely handled by event file
+*    evt->SetEffCrossSection(fEvent->xs*microbarn);
+*    evt->SetQ2(fEvent->Q2);
+*    evt->SetW2(fEvent->W2);
+*    evt->SetAsymmetry(fEvent->A*ppb);
+*/
+    evt->SetEffCrossSection(619.5*microbarn);
+    evt->SetQ2(0.0);
+    evt->SetW2(4e15);
+    evt->SetAsymmetry(-42.0*ppb);
     // Loop over all hits in this event
     for (size_t i = 0; i < fHit->size(); i++) {
       // Create local copy of this hit
@@ -125,7 +131,6 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
       G4ParticleDefinition* particle = particletable->FindParticle(hit.pid);
       G4String particlename = particle->GetParticleName();
 
-      //double zVert = (double)hit.z + (double)fzOffset;
       // Throw new particle
       evt->ProduceNewParticle(
           G4ThreeVector(hit.x, hit.y, hit.z + fzOffset),

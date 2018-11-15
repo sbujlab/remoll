@@ -24,10 +24,12 @@ remollGenExternal::remollGenExternal()
   fFile(0), fTree(0),
   fEntry(0), fEntries(0),
   fEvent(0), fHit(0),
-  fDetectorID(28), fLoopID(1)
+  fzOffset(0), fDetectorID(28), fLoopID(1)
 {
+  fSampType = kNoTargetVolume;
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
+  fThisGenMessenger->DeclareMethod("zOffset",&remollGenExternal::SetGenExternalZOffset,"External generator zOffset");
   fThisGenMessenger->DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
   fThisGenMessenger->DeclareMethod("startEvent",&remollGenExternal::SetGenExternalEntry,"External generator starting event: -1 starts random,  n starts at n (default n=0)");
   G4cout << "Constructed remollGenExternal" << G4endl;
@@ -123,9 +125,10 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
       G4ParticleDefinition* particle = particletable->FindParticle(hit.pid);
       G4String particlename = particle->GetParticleName();
 
+      //double zVert = (double)hit.z + (double)fzOffset;
       // Throw new particle
       evt->ProduceNewParticle(
-          G4ThreeVector(hit.x, hit.y, hit.z),
+          G4ThreeVector(hit.x, hit.y, hit.z + fzOffset),
           G4ThreeVector(hit.px, hit.py, hit.pz),
           particlename);
       number_of_particles++;

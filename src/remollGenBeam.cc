@@ -25,6 +25,7 @@ remollGenBeam::remollGenBeam()
     fTheta(0), fDeltaPhi(0),
     fParticleName("e-")
 {
+    fSampType = kNoTargetVolume;
     fApplyMultScatt = true;
     
     fThisGenMessenger->DeclareMethodWithUnit("hitx","mm",&remollGenBeam::SetHitX,"x coordinate of hit position for the beam");
@@ -74,7 +75,7 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
     // Calculate origin position based on hit coordinates and angles.
     
-    vZ = fZhitPos - fZoffset;
+    vZ = fZhitPos + fZoffset;
 
     double radius = fZoffset*tan(fTheta);
     

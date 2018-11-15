@@ -27,6 +27,7 @@ remollGenBlackening::remollGenBlackening()
   fMinPhi(-180.0*deg), fMaxPhi(180.0*deg),
   fSeptFold(false)
 {
+  fSampType = kNoTargetVolume;
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("minRad",&remollGenBlackening::SetMinRadius,"Minimum Radius for Blackening Study");
   fThisGenMessenger->DeclareMethod("maxRad",&remollGenBlackening::SetMaxRadius,"Maximum Radius for Blackening Study");

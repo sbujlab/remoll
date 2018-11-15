@@ -63,9 +63,6 @@ void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
 void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
-    double vX, vY, vZ;
-    double pX, pY, pZ;
-
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4ParticleDefinition* particle = particleTable->FindParticle(fParticleName);
 
@@ -73,31 +70,14 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     double E = fBeamTarg->fBeamEnergy;
     double m = particle->GetPDGMass();
     double p = sqrt(E*E - m*m);
-    
-
-    
-    pX = cos(fDeltaPhi)*sin(fTheta)*p;
-    pY = sin(fDeltaPhi)*sin(fTheta)*p;
-    pZ = cos(fTheta)*p;
-    
-    evt->fBeamMomentum = p*G4ThreeVector(pX, pY, pZ);
     evt->fBeamE = E;
     evt->fBeamMomentum = p * G4ThreeVector(fXdir,fYdir,fZdir).unit();
     evt->fBeamPolarization = G4ThreeVector(fXpol, fYpol, fZpol);
 
-    // Calculate origin position based on hit coordinates and angles.
-    
-    vZ = fZhitPos + fZoffset;
-
-    double radius = fZoffset*tan(fTheta);
-    
-    vX = fXhitPos - radius*cos(fDeltaPhi);
-    vY = fYhitPos - radius*sin(fDeltaPhi);
-    
     // Override target sampling z
-    evt->fVertexPos.setX( vX );
-    evt->fVertexPos.setY( vY );
-    evt->fVertexPos.setZ( vZ );
+    evt->fVertexPos.setX( fXpos );
+    evt->fVertexPos.setY( fYpos );
+    evt->fVertexPos.setZ( fZpos );
 
     evt->ProduceNewParticle(
 	    G4ThreeVector(0.0, 0.0, 0.0),

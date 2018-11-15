@@ -24,9 +24,5 @@
 /process/list
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
-<<<<<<< HEAD
-/remoll/filename remoll_epelastic_envelope_noCol4_noCoils_500k.root
-=======
 /remoll/filename remoll_moller_envelope_500k.root
->>>>>>> b407b3d641bd443d79b4ab3320aea9ab4f6e49b6
 /run/beamOn 500000

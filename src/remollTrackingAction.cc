@@ -19,9 +19,8 @@ remollTrackingAction::remollTrackingAction()
     .SetGuidance(" 1 : Track primary electrons and optical photons only")
     .SetGuidance(" 2 : Track all particles except optical photons")
     .SetGuidance(" 3 : Track all particles")
-    .SetGuidance(" 4 : Track photons only")
     .SetParameterName("flag",false)
-    .SetRange("flag >=0 && flag <= 4")
+    .SetRange("flag >=0 && flag <= 3")
     .SetStates(G4State_PreInit,G4State_Idle);
 }
 
@@ -71,16 +70,8 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
   }
 
   // Track all particles
-  else if (fTrackingFlag == 3){
+  else{
   }
-
-  // Track photons only
-  else if (fTrackingFlag == 4){
-    if(aTrack->GetTrackID() == 22){
-    } else {
-      fpTrackingManager->EventAborted();
-      return;
-    }
   }
 
 void remollTrackingAction::PostUserTrackingAction(const G4Track* aTrack)

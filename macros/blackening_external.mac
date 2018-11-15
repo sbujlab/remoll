@@ -20,13 +20,13 @@
 #/run/beamOn 100
 
 # Beam
-/remoll/evgen/set beam
-/remoll/evgen/beam/x -987.5
-/remoll/evgen/beam/z -20.0
-/remoll/evgen/beam/px -0.0523
-/remoll/evgen/beam/pz 0.9986 
-/remoll/filename remollout_r5o_beam_default.root
-/run/beamOn 100
+#/remoll/evgen/set beam
+#/remoll/evgen/beam/x -987.5
+#/remoll/evgen/beam/z -20.0
+#/remoll/evgen/beam/px -0.0523
+#/remoll/evgen/beam/pz 0.9986 
+#/remoll/filename remollout_r5o_beam_default.root
+#/run/beamOn 100
 
 # External
 /remoll/evgen/set external
@@ -35,4 +35,4 @@
 /remoll/evgen/external/startEvent 0
 /remoll/evgen/external/zOffset -28550.0
 /remoll/filename remollout_r5o_external_default.root
-/run/beamOn 100
+/run/beamOn 1000

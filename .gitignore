@@ -36,6 +36,7 @@ share
 build*
 bldXcode
 map_directory
+detector
 
 #ignore rad_dose radiation analysis work (another repository on sbujlab github)
 rad_analysis

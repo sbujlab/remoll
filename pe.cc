@@ -254,7 +254,7 @@ void pe(std::string file="tracking.root", int detid=50001)
     //TODO reading data into envelopes downstream could be sped up
     //by storing the data by Z instead of by hit
     
-    newTree->Branch("catpes", catPEs);
+    newTree->Branch("catpes", &catPEs);
     newTree->Branch("q", &Q);
     newTree->Branch("ref", &Ref);
     newTree->Branch("refx", &RefX);
@@ -323,7 +323,6 @@ void pe(std::string file="tracking.root", int detid=50001)
             for (size_t k = 0; k < eTRID.size(); k++)
             {
                 if (hit.trid == eTRID.at(k)) { // Then this electron hit a detector we should know about and store all of the info and cathode hits too
-                    detSourcedPEs=(int)peTRID.size();
                     //std::cout << "electron TRID " << hit.trid << std::endl;
                     // Make the electron hit info go into the appropriate detector branch
                     if (hit.det == detid) {     // quartz
@@ -354,6 +353,7 @@ void pe(std::string file="tracking.root", int detid=50001)
                 }
             }   
         }
+        detSourcedPEs=(int)peTRID.size();
         catPEs->push_back(catPEsTrim(eDETID,(int)peTRID.size(),catHitx,catHity,catHitz)); 
         elseX->push_back(elseXTrim(((int)peTRID.size()-detSourcedPEs),catHitx,catHity,catHitz));
         if (catPEs->size() > 0){

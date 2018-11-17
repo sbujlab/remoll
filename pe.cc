@@ -278,7 +278,7 @@ void pe(std::string file="tracking.root", int detid=50001)
         std::vector<int> eDETID;
         std::vector<int> peTRID;
         int detSourcedPEs = 0;
-        std::vector<double> x, y, z, px, py, pz, p, e, m, vx, vy, vz;
+        //std::vector<double> x, y, z, px, py, pz, p, e, m, vx, vy, vz;
         std::vector<double> catHitx, catHity, catHitz;
         // Log which electron track IDs (and other info) hit which detectors, and which PE IDs hit the cathode and where
         // Attribute all npe counts and cathode hit positions to all eDETID branches that are hit during that event (in lieu of getting photon birth vertex properly down)
@@ -293,10 +293,11 @@ void pe(std::string file="tracking.root", int detid=50001)
             //  Store the electron hit location and energy, etc. for that hit
             //  Store the total number of photons that hit the cathode after that electron hit, and their cathode hit info
             
-            if (hit.pid == 11 && hit.mtrid == 1){ // Then this is our primary signal of interest
+            if (hit.pid == 11 && hit.mtrid == 0){ // Then this is our primary signal of interest
+            // if you do mtrid == 1 then you get the delta rays! About a 1% contribution 
                 eTRID.push_back(hit.trid);
                 eDETID.push_back(hit.det);
-                x.push_back(hit.x);
+                /*x.push_back(hit.x);
                 y.push_back(hit.y);
                 z.push_back(hit.z);
                 px.push_back(hit.px);
@@ -307,9 +308,9 @@ void pe(std::string file="tracking.root", int detid=50001)
                 vz.push_back(hit.vz);
                 p.push_back(hit.p);
                 e.push_back(hit.e);
-                m.push_back(hit.m);
+                m.push_back(hit.m);*/
             }
-            if (hit.pid == 0){ // Then this is an optical photon and we want to count ++ if it hits the PMT cathode
+            if (hit.pid == 0 && hit.det == detid+700){ // Then this is an optical photon and we want to count ++ if it hits the PMT cathode
                 peTRID.push_back(hit.trid);
                 catHitx.push_back(hit.x);
                 catHity.push_back(hit.y);
@@ -369,6 +370,12 @@ void pe(std::string file="tracking.root", int detid=50001)
         LG->clear();
         PMTbulk->clear();
         PMTcat->clear();
+        catHitx.clear();
+        catHity.clear();
+        catHitz.clear();
+        eTRID.clear();  
+        eDETID.clear();
+        peTRID.clear();
     }
     newFile = newTree->GetCurrentFile();
     newTree->Write("", TObject::kOverwrite);

@@ -250,9 +250,9 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
     std::fstream file_out_rms;
     std::ofstream file_out_mean;
     std::ofstream file_out_res;
-    file_out_rms.open("rms.csv",std::ofstream::out | std::ofstream::app);
-    file_out_mean.open("mean.csv",std::ofstream::out | std::ofstream::app);
-    file_out_res.open("res.csv",std::ofstream::out | std::ofstream::app);
+    file_out_rms.open(Form("../%s_rms.csv",variable.c_str()),std::ofstream::out | std::ofstream::app);
+    file_out_mean.open(Form("../%s_mean.csv",variable.c_str()),std::ofstream::out | std::ofstream::app);
+    file_out_res.open(Form("../%s_res.csv",variable.c_str()),std::ofstream::out | std::ofstream::app);
 
     //gROOT->SetStyle("Plain");
     //gStyle->SetOptStat(0); 

@@ -387,9 +387,11 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
         Meanerror[p] = 1.0*Histo[p]->GetMeanError();
 
         //Plot_Name,x_axis_units,x_number,y_number,y_uncertainty
-        file_out_rms<<names[p]<<" - Changed "<<variable<<" - RMS,"<<unit<<","<<varVal<<","<<RMS[p]<<","<<RMSerror[p]<<std::endl;
-        file_out_mean<<names[p]<<" - Changed "<<variable<<" - Mean,"<<unit<<","<<varVal<<","<<Mean[p]<<","<<Meanerror[p]<<std::endl;
-        file_out_res<<names[p]<<" - Changed "<<variable<<" - Resolution = RMS/Mean,"<<unit<<","<<varVal<<","<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
+        if (p==0){
+            file_out_rms<<names[p]<<" - Changed "<<variable<<" - RMS,"<<unit<<","<<varVal<<","<<RMS[p]<<","<<RMSerror[p]<<std::endl;
+            file_out_mean<<names[p]<<" - Changed "<<variable<<" - Mean,"<<unit<<","<<varVal<<","<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            file_out_res<<names[p]<<" - Changed "<<variable<<" - Resolution = RMS/Mean,"<<unit<<","<<varVal<<","<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
+        }
 
         c1[p]->Write();
         c1[p]->SaveAs(/*plotsFolder+*/Form("%s_%03.2f_%02d.png",variable.c_str(),varVal,p));
